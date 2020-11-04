@@ -271,26 +271,26 @@
                  class="code_v"
                  onclick="reLoadCode()">
         </div>
-        <a href="javascript:document.forms.namedItem('login_form').submit()">
+        <div style="text-align: center"><a href="javascript:document.forms.namedItem('login_form').submit()">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
             Login
         </a>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="<%=request.getContextPath()+InitParams.REGISTERPAGE%>">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="<%=request.getContextPath()+InitParams.REGISTERPAGE%>">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
             Register
-        </a>
+        </a></div>
     </form>
 </div>
 <!--视频背景-->
 <video autoplay loop muted>
-    <source src="video/index-video.mp4" type="video/mp4"/>
+    <source src="./video/trolley.mp4" type="video/mp4"/>
     Your browser does not support the video tag.
 </video>
 <script>

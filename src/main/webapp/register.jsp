@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>爱购注册页面</title>
-    <%--    <link rel="icon" type="image/x-icon" href="img/title-icon.jpg"/>--%>
     <link rel="stylesheet" href="css/reset2.css"/>
     <link rel="stylesheet" href="css/footer2.css"/>
     <link rel="stylesheet" href="css/login.css"/>
