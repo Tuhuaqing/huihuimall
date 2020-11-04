@@ -62,15 +62,15 @@ public class GlobalFilter implements Filter {
         } else {
             // 不是白名单, 就要检测是否登录
             res.setContentType("text/html;charset=utf-8");
-            // UserInfo currentUserInfo = (UserInfo) req.getSession().getAttribute("currentUserInfo"); // 先注释掉,用假登录开发,图方便
-            UserInfo currentUserInfo = new UserInfo()
-                    .setId(FactoryUtil.getRandomUUID())
-                    .setUserName("余承东")
-                    .setPassword("123")
-                    .setTypeId("usertypeid001")
-                    .setStatus("在线");
-            req.getSession().setAttribute("currentUserInfo",currentUserInfo);
-            System.out.println("当前登录用户:"+currentUserInfo);
+            UserInfo currentUserInfo = (UserInfo) req.getSession().getAttribute("currentUserInfo");
+//            UserInfo currentUserInfo = new UserInfo()
+//                    .setId(FactoryUtil.getRandomUUID())
+//                    .setUserName("余承东")
+//                    .setPassword("123")
+//                    .setTypeId("usertypeid001")
+//                    .setStatus("在线");
+            req.getSession().setAttribute("currentUserInfo", currentUserInfo);
+            System.out.println("当前登录用户:" + currentUserInfo);
             if (null == currentUserInfo || currentUserInfo.getId().equals("")) {
                 Forwarder.showErrorPageAndToNewPage(req, res, "请先登录<br/>2秒后自动跳转至登录页面", "login.jsp");
                 return;

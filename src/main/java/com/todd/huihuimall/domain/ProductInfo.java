@@ -17,4 +17,8 @@ public class ProductInfo {
     private String productStatus;
     private String shopId;
     private String typeId;
+    private String imgUrl;
+    private String detailUrl;
+
+    private ProductType productType;
 }

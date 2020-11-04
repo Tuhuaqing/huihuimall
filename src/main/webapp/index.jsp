@@ -1,11 +1,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page isELIgnored="false"%>
+<%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" import="java.util.*" %>
 <%@ page import="com.todd.huihuimall.domain.UserInfo" %>
-<%--
-	String path = request.getContextPath();
-	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
---%>
+<%@ page import="com.todd.huihuimall.domain.ProductInfo" %>
+<%@ page import="com.todd.huihuimall.service.ProductInfoService" %>
+<%@ page import="static com.todd.huihuimall.util.CheckUtil.isEmpty" %>
+<%@ page import="static com.todd.huihuimall.util.CheckUtil.isNotEmpty" %>
+<%@ page import="java.util.function.*" %>
+<%@ page import="java.util.stream.*" %>
+<%@ page import="com.todd.huihuimall.util.StreamUtil" %>
+<%
+    // 全局参数
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+    // 搜索关键字
+    String likeword = request.getParameter("likeword");
+    // 要展示的页码
+    String currentPage = request.getParameter("p");
+    Integer p = isEmpty(currentPage) ? 1 : Integer.valueOf(currentPage);
+
+    // 根据条件进行筛选展示>>>>>>>>>>>>>>>>>>>>>
+    // 先拿到所有商品数据
+    Stream<ProductInfo> products = new ProductInfoService().getAll().stream();
+    // 关键字筛选
+    if (isNotEmpty(likeword)) {
+        products = StreamUtil.FilterProductInfoLikeword(products, likeword);
+    }
+    // 存入内存
+    request.setAttribute("products", products.collect(Collectors.toList()));
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,9 +53,9 @@
         </a>
         <!--搜索框-->
         <div class="search">
-            <form action="#" method="get">
+            <form action="login.jsp" method="get">
                 <div>
-                    <input type="text" class="search-txt"/>
+                    <input type="text" name="likeword" class="search-txt"/>
                 </div>
                 <div class="sub-btn">
                     <input type="submit" value="" class="sub-img"/>
@@ -47,7 +70,7 @@
                 </c:when>
                 <c:otherwise>
                     <span>当前用户:</span>
-                    <span style="color:dodgerblue"><%=((UserInfo)session.getAttribute("currentUserInfo")).getUserName()%></span>
+                    <span style="color:dodgerblue"><%=((UserInfo) session.getAttribute("currentUserInfo")).getUserName()%></span>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a style="color: #d0021b" href="logout">注销</a>
                 </c:otherwise>
@@ -60,6 +83,8 @@
         </div>
     </div>
 </div>
+
+
 <!--网页主体内容-->
 <div class="contain w1300 clearfloat">
     <!--中心内容左边-->
@@ -108,374 +133,37 @@
         <!--商品展示-->
         <div class="goods-show">
             <ul class="clearfloat">
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/1boje2um391_800_800.jpg" alt="" width="195" height="195" class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥88.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                网易智造 USB智能充电器(4U) 手机配件 手机充电器 多功能充电器
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/6b198b81-e1f0-4c32-8f72-66da7931dd2c.jpg" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥549.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                【限时特惠】Audio Technica 铁三角 WS550iS 便携式智能手机耳麦低频强劲 手机耳机 国行正品
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/d95c1d29-e90e-4241-8ce9-e2e77914a0dc.jpg" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥2798.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                魅族 16th 全面屏游戏手机 6GB+128GB 全网通移动联通电信4G手机 双卡双待
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/4e29f086-b74d-40ce-b245-db6c9b4319bc.jpg" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥69.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                tech21官方手机壳 Phone8/8p防摔时尚款保护套苹果官方手机壳全包
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/19042071-1618-4a9e-99ff-50829aca066f.jpg" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥49.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                X-doria 漫威iPhoneXs手机壳Xs Max潮牌潮品玻璃质感全包防摔苹果XR手机保护套
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/1ck78n5jc72_800_800.jpg" alt="" width="195" height="195" class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥2699.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                MI 小米 8 全面屏 6GB+64GB 黑色 全网通4G手机 双卡双待 拍照游戏智能手机
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/f91214f0-7272-47cb-9c8d-5a4a8d0b7b8f.jpg" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥59.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                X-doria iPhoneX商务手机壳凌范全包软边防摔苹果X透明手机保护套
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/TB16S7YkhTI8KJjSspiXXbM4FXa_!!0-item_pic.jpg_430x430q90.jpg" alt="" width="195"
-                             height="195" class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥9.9</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                希捷手机支架 手机指环
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/6c0d51d9-7110-4ad3-91c8-c2402ea20e33.jpg" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥449.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                小天才 电话手表 Y01A 浅紫+原装浅紫表带组合 儿童智能手表360度安全防护 学生定位手机 儿童手机
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/f5769baab38f42e388b5dbaad4641f3b1512633554920jaw6yoqy12412.jpg" alt="" width="195"
-                             height="195" class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥3499.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                一加手机5T 熔岩红 全网通 移动联通电信4G手机 双卡双待 国行保修
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/1c8uct3so40_800_800.jpg" alt="" width="195" height="195" class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥3299.0</span>
-                                <img src="img/icon_up.png"/>
-                            </p>
-                            <p class="goods-des">
-                                小米 MIX2 全面屏游戏手机 6GB+64GB 黑色 全网通4G手机 双卡双待
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/7a66740a239d4407819411294d9620841521431743462jexp6eh112097.jpg" alt="" width="195"
-                             height="195" class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥1299.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                小米5X 美颜双摄拍照手机 4GB+32GB 全网通4G手机 双卡双待
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/d79ec3b4d0cf43b29ba5c0fd622bfc801522389459589jfdjdkyi21453.jpg" alt="" width="195"
-                             height="195" class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥2699.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                小米MIX2S 全面屏游戏手机 6GB+64GB 全网通4G 陶瓷手机
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/a25db096-e0d8-4c4f-813f-fc1db8c70e41.jpg" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥58.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                X-doria 漫威iPhoneXs手机壳Xs Max防滑防汗潮牌新款全包防摔苹果XR手机保护套
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/e61c9c02-17cf-47fe-9847-19de31c4ff03.jpg" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥28.0</span>
-                                <img src="img/icon_down.png"/>
-                            </p>
-                            <p class="goods-des">
-                                Momax摩米士 iPhoneX硅胶防摔手机壳全包透明手机套苹果X超薄保护套软
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/1ck9hpnjv26_800_800.jpg" alt="" width="195" height="195" class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥3299.0</span>
-                                <img src="img/icon_up.png"/>
-                            </p>
-                            <p class="goods-des">
-                                MI 小米8 全面屏 6GB+256GB 白色 全网通4G手机 双卡双待 拍照游戏智能手机
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/441c161b-9d82-463d-9919-171d4223a6b8.jpg" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥49.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                【魔影系列】NORTHJO诺左 iPhone手机壳 苹果磨砂防摔全包手机套 超薄保护套-红色/黑色-XS/XR/XS MAX
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/1ck9gf53h62_800_800.jpg" alt="" width="195" height="195" class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥2999.0</span>
-                                <img src="img/icon_up.png"/>
-                            </p>
-                            <p class="goods-des">
-                                MI 小米8 全面屏 6GB+128G 金色 全网通4G手机 双卡双待 拍照游戏智能手机
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/3f0510ab-b890-4e12-ba83-fd6fef320036.jpg" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥69.9</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                X-doria HelloKitty苹果X萌趣硅胶手机壳全包防摔蓝牙自拍支架卡通手机保护套
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="goods-item">
-                    <a href="#">
-                        <img src="img/92652b97-1a2b-44a6-979e-ddfac97ae625.png" alt="" width="195" height="195"
-                             class="goods-img"/>
-                        <p class="to-store">直达商品</p>
-                        <div class="goods-info">
-                            <p class="goods-price clearfloat">
-                                <span>￥58.0</span>
-                                <img src="img/icon_steady.png"/>
-                            </p>
-                            <p class="goods-des">
-                                ROCK 华为MATE20 3D浮雕手机壳鱼趣横生花艺芬芳华为DFH认证手机壳
-                            </p>
-                            <span class="goods-coupon">淘宝</span>
-                            <span class="goods-num">销量0</span>
-                        </div>
-                    </a>
-                </li>
+                <c:forEach var="product" items="${products}">
+                    <li class="goods-item">
+                        <a href="${product.detailUrl}">
+                            <img src="${product.imgUrl}" alt="" width="195" height="195"
+                                 class="goods-img"/>
+                            <p class="to-store">直达商品</p>
+                            <div class="goods-info">
+                                <p class="goods-price clearfloat">
+                                    <span><c:out value="${product.productPrice}"/></span>
+                                    <img src="img/icon_steady.png"/>
+                                </p>
+                                <p class="goods-des">
+                                    <c:out value="${product.productName}"/>
+                                </p>
+                                <span class="goods-coupon"><c:out value="${product.productType.typeName}"/></span>
+                                <span class="goods-num">库存 ${product.productCount}</span>
+                            </div>
+                        </a>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
-
+        <!--更多-->
         <div class="more-pages">
-            <a class="direction-page" href="#"><</a> 第1页&nbsp;&nbsp;/&nbsp;&nbsp; 共7页 <a class="direction-page"
-                                                                                         href="#">></a>
-
+            <a class="direction-page" href="#"><</a>
+            第1页&nbsp;&nbsp;/&nbsp;&nbsp; 共7页
+            <a class="direction-page" href="#">></a>
         </div>
 
 
     </div>
-
-
     <!--中心内容右边-->
     <div class="contain-right">
         <a href="#" class="right-link">
@@ -526,6 +214,8 @@
         </a>
     </div>
 </div>
+
+
 <!--网页脚注-->
 <div class="footer">
     <div class="footer-main w1300">

@@ -2,13 +2,12 @@ package com.todd.huihuimall.test;
 
 import com.todd.huihuimall.service.ProductInfoService;
 import com.todd.huihuimall.service.ShopInfoService;
-import com.todd.huihuimall.util.MybatisUtil;
-import com.todd.huihuimall.dao.ShopInfoMapper;
+import com.todd.huihuimall.util.HttpRequestUtil;
 import com.todd.huihuimall.domain.UserInfo;
 import com.todd.huihuimall.service.UserInfoService;
 import com.todd.huihuimall.util.FactoryUtil;
-import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
+import java.util.UUID;
 
 public class TestClass {
 
@@ -54,6 +53,28 @@ public class TestClass {
     // 查询所有商品
     @Test
     public void test6() {
+        productInfoService.getAll().forEach(System.out::println);
+    }
+
+    // 测试http请求
+    @Test
+    public void test7() {
+        System.out.println(HttpRequestUtil.sendGet("https://www.baidu.com", null));
+    }
+
+    @Test
+    public void test8() {
+        System.out.println(UUID.randomUUID().toString());
+    }
+
+    @Test
+    public void test9() {
+        System.out.println("".equals(""));
+    }
+
+    // 测试带type的product
+    @Test
+    public void test10(){
         productInfoService.getAll().forEach(System.out::println);
     }
 }

@@ -4,26 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.todd.huihuimall.dao.ProductInfoMapper">
 
+    <!--  所有商品,不带ProductType  -->
+    <!--    <select id="selectAll" resultType="ProductInfo">-->
+    <!--        select * from `product_info`-->
+    <!--    </select>-->
 
-    <!--    <resultMap type="com.tsvv.pojo.Emply" id="emplyRM">-->
-    <!--        <id column="id" property="id"/>-->
-    <!--        <result column="name" property="name"/>-->
-    <!--        <result column="tele" property="tele"/>-->
-    <!--        <result column="addr" property="addr"/>-->
-    <!--        <result column="birthday" property="birthday"/>-->
-    <!--        <result column="create_time" property="createTime"/>-->
-    <!--        <association property="teacher"-->
-    <!--                     column="tid" javaType="Teacher"-->
-    <!--                     select="getTeacherById"></association>-->
-    <!--        <collection-->
-    <!--                property="users"-->
-    <!--                column="id"-->
-    <!--                ofType="User"-->
-    <!--                select="getUnderUsers"/>-->
-    <!--    </resultMap>-->
-
-    <select id="selectAll" resultType="ProductInfo">
+    <!--  所有商品, 带ProductType  -->
+    <select id="selectAll" resultMap="productInfoWithProductType">
         select * from `product_info`
+    </select>
+    <resultMap type="com.todd.huihuimall.domain.ProductInfo" id="productInfoWithProductType">
+        <!--其他属性会自动填充,不用显示写出来,除非你的字段名称不对应-->
+        <association property="productType"
+                     column="type_id"
+                     javaType="ProductType"
+                     select="selectProductTypeById"></association>
+    </resultMap>
+    <select id="selectProductTypeById" parameterType="String" resultType="ProductType">
+        select * from `product_type` where id=#{typeid}
     </select>
 
 </mapper>
