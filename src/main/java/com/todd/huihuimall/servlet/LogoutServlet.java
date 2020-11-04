@@ -1,5 +1,7 @@
 package com.todd.huihuimall.servlet;
 
+import com.todd.huihuimall.config.InitParams;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +17,7 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         HttpSession ss = req.getSession();
         ss.removeAttribute("currentUserInfo");
-        req.getRequestDispatcher("login.jsp").forward(req,res);
+        req.getRequestDispatcher(InitParams.LOGINPAGE).forward(req,res);
     }
 
     @Override

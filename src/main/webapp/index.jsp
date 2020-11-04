@@ -9,10 +9,9 @@
 <%@ page import="java.util.function.*" %>
 <%@ page import="java.util.stream.*" %>
 <%@ page import="com.todd.huihuimall.util.StreamUtil" %>
+<%@ page import="com.todd.huihuimall.config.InitParams" %>
+<%@ page import="java.awt.font.ShapeGraphicAttribute" %>
 <%
-    // 全局参数
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
     // 搜索关键字
     String likeword = request.getParameter("likeword");
     // 要展示的页码
@@ -21,13 +20,25 @@
 
     // 根据条件进行筛选展示>>>>>>>>>>>>>>>>>>>>>
     // 先拿到所有商品数据
-    Stream<ProductInfo> products = new ProductInfoService().getAll().stream();
+    List<ProductInfo> products = new ProductInfoService().getAll();
     // 关键字筛选
     if (isNotEmpty(likeword)) {
-        products = StreamUtil.FilterProductInfoLikeword(products, likeword);
+        products = StreamUtil.FilterProductInfoLikeword(products.stream(), likeword);
     }
+    // 一页20条数据, 共有多少页?
+    Integer shang = products.size() / InitParams.PAGESIZE;
+    Integer productSize = products.size();
+    Integer pageCount = 0;
+    if(productSize<=20){
+        pageCount = 1;
+    }else if (productSize%InitParams.PAGESIZE==0){
+        pageCount = shang;
+    }else{
+        pageCount = shang+1;
+    }
+    // 只看当前页
     // 存入内存
-    request.setAttribute("products", products.collect(Collectors.toList()));
+    request.setAttribute("products", products);
 %>
 <!DOCTYPE html>
 <html>
@@ -53,7 +64,7 @@
         </a>
         <!--搜索框-->
         <div class="search">
-            <form action="login.jsp" method="get">
+            <form action="index.jsp" method="get">
                 <div>
                     <input type="text" name="likeword" class="search-txt"/>
                 </div>
@@ -158,7 +169,7 @@
         <!--更多-->
         <div class="more-pages">
             <a class="direction-page" href="#"><</a>
-            第1页&nbsp;&nbsp;/&nbsp;&nbsp; 共7页
+            第<%=p%>页&nbsp;&nbsp;/&nbsp;&nbsp; 共<%=pageCount%>页
             <a class="direction-page" href="#">></a>
         </div>
 

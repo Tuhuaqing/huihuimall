@@ -1,5 +1,6 @@
 package com.todd.huihuimall.servlet;
 
+import com.todd.huihuimall.config.InitParams;
 import com.todd.huihuimall.domain.UserInfo;
 import com.todd.huihuimall.service.UserInfoService;
 import com.todd.huihuimall.util.Forwarder;
@@ -29,27 +30,26 @@ public class LoginServlet extends HttpServlet {
         // 是否缺少参数
         if ("".equals(userName) || "".equals(password) || "".equals(verificationCode)
         ) {
-            Forwarder.showErrorPageAndToNewPage(req, res, "缺少参数, 请2秒后重试", req.getContextPath() + "/login.jsp");
+            Forwarder.showErrorPageAndToNewPage(req, res, "缺少参数, 请2秒后重试", req.getContextPath() + InitParams.LOGINPAGE);
             return;
         }
         // 看用户名是否已经存在
         if (null == (userInfo = userInfoService.getOneByUserName(userName))) {
-            Forwarder.showErrorPageAndToNewPage(req, res, "账户不存在,请2秒后重新登录", req.getContextPath() + "/login.jsp");
+            Forwarder.showErrorPageAndToNewPage(req, res, "账户不存在,请2秒后重新登录", req.getContextPath() + InitParams.LOGINPAGE);
             return;
         }
         // 密码是否正确
         if (!password.equals(userInfo.getPassword())) {
-            Forwarder.showErrorPageAndToNewPage(req, res, "密码错误,请2秒后重新登录", req.getContextPath() + "/login.jsp");
+            Forwarder.showErrorPageAndToNewPage(req, res, "密码错误,请2秒后重新登录", req.getContextPath() + InitParams.LOGINPAGE);
             return;
         }
         // 看验证码是否正确
         if (!ss.getAttribute("correctVerificationCode").toString().toUpperCase().equals(verificationCode)) {
-            Forwarder.showErrorPageAndToNewPage(req, res, "验证码错误,请2秒后重新登录", req.getContextPath() + "/login.jsp");
+            Forwarder.showErrorPageAndToNewPage(req, res, "验证码错误,请2秒后重新登录", req.getContextPath() + InitParams.LOGINPAGE);
             return;
         }
         // 开始登录
         ss.setAttribute("currentUserInfo", userInfo); // session存用户信息
         res.sendRedirect("index.jsp");
-
     }
 }
