@@ -127,46 +127,46 @@
     <!--中心内容左边-->
     <div class="contain-left">
         <!--筛选-->
-        <div class="choice">
-            <h3 class="choice-title">全网好货</h3>
-            <!--商城-->
-            <div class="store">
-                <span class="store-title">商城：</span>
-                <ul class="store-ul clear-float">
-                    <li>
-                        <input type="checkbox" class="chk" id="chk1" checked="checked"/>
-                        <label for="chk1">淘宝精选</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" class="chk" id="chk2" checked="checked"/>
-                        <label for="chk2">京东精选</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" class="chk" id="chk3" checked="checked"/>
-                        <label for="chk3">当当精选</label>
-                    </li>
-                </ul>
-                <input type="submit" value="提交" class="store-btn"/>
-            </div>
-            <!--排序-->
-            <div class="order">
-                <span class="order-title">排序：</span>
-                <ul class="order-ul clear-float">
-                    <li class="order-price">
-                        <a href="#">价格</a>
-                        <span id="up-icon"></span>
-                        <span id="down-icon"></span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <input type="number" placeholder="￥"/> -
-                            <input type="number" placeholder="￥"/>
-                        </a>
-                        <a href="#" class="price-sure store-btn">确定</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<%--        <div class="choice">--%>
+<%--            <h3 class="choice-title">全网好货</h3>--%>
+<%--            <!--商城-->--%>
+<%--            <div class="store">--%>
+<%--                <span class="store-title">商城：</span>--%>
+<%--                <ul class="store-ul clear-float">--%>
+<%--                    <li>--%>
+<%--                        <input type="checkbox" class="chk" id="chk1" checked="checked"/>--%>
+<%--                        <label for="chk1">淘宝精选</label>--%>
+<%--                    </li>--%>
+<%--                    <li>--%>
+<%--                        <input type="checkbox" class="chk" id="chk2" checked="checked"/>--%>
+<%--                        <label for="chk2">京东精选</label>--%>
+<%--                    </li>--%>
+<%--                    <li>--%>
+<%--                        <input type="checkbox" class="chk" id="chk3" checked="checked"/>--%>
+<%--                        <label for="chk3">当当精选</label>--%>
+<%--                    </li>--%>
+<%--                </ul>--%>
+<%--                <input type="submit" value="提交" class="store-btn"/>--%>
+<%--            </div>--%>
+<%--            <!--排序-->--%>
+<%--            <div class="order">--%>
+<%--                <span class="order-title">排序：</span>--%>
+<%--                <ul class="order-ul clear-float">--%>
+<%--                    <li class="order-price">--%>
+<%--                        <a href="#">价格</a>--%>
+<%--                        <span id="up-icon"></span>--%>
+<%--                        <span id="down-icon"></span>--%>
+<%--                    </li>--%>
+<%--                    <li>--%>
+<%--                        <a href="#">--%>
+<%--                            <input type="number" placeholder="￥"/> ---%>
+<%--                            <input type="number" placeholder="￥"/>--%>
+<%--                        </a>--%>
+<%--                        <a href="#" class="price-sure store-btn">确定</a>--%>
+<%--                    </li>--%>
+<%--                </ul>--%>
+<%--            </div>--%>
+<%--        </div>--%>
         <!--商品展示-->
         <div class="goods-show">
             <ul class="clearfloat">

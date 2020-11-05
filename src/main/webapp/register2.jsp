@@ -253,7 +253,7 @@
     Enroll the HuiHui Mall
 </header>
 <div class="login-box">
-    <h2>Login</h2>
+    <h2>Enroll</h2>
     <form name="register_form" action="register" method="post">
         <div class="user-box">
             <input type="text" name="username" required>
