@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ProductInfoMapper {
     List<ProductInfo> selectAll();
+    List<ProductInfo> selectByLikeword(String likeword);
 }

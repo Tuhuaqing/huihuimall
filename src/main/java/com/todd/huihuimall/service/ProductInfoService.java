@@ -22,4 +22,17 @@ public class ProductInfoService {
         }
     }
 
+    // 按product_name模糊查询
+    public List<ProductInfo> getByLikeword(String likeword){
+        SqlSession sqlSession = null;
+        ProductInfoMapper mapper = null;
+        try {
+            sqlSession = MybatisUtil.getSqlSession();
+            mapper = sqlSession.getMapper(ProductInfoMapper.class);
+            return mapper.selectByLikeword(likeword);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
 }

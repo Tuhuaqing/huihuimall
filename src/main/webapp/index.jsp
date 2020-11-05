@@ -11,32 +11,32 @@
 <%@ page import="com.todd.huihuimall.util.StreamUtil" %>
 <%@ page import="com.todd.huihuimall.config.InitParams" %>
 <%@ page import="java.awt.font.ShapeGraphicAttribute" %>
+<%@ page import="com.github.pagehelper.PageHelper" %>
+<%@ page import="com.github.pagehelper.PageInfo" %>
 <%
     // 搜索关键字
     String likeword = request.getParameter("likeword");
-    // 要展示的页码
-    String currentPage = request.getParameter("p");
-    Integer p = isEmpty(currentPage) ? 1 : Integer.valueOf(currentPage);
+    // 准备分页相关的参数
+    String p = request.getParameter("p");
+    Integer currentPage = isEmpty(p) ? 1 : Integer.valueOf(p);
+    // 准备service
+    ProductInfoService productInfoService = new ProductInfoService();
+    // 准备容器
+    PageInfo<ProductInfo> pageInfo = null;
+    List<ProductInfo> products = null;
 
-    // 根据条件进行筛选展示>>>>>>>>>>>>>>>>>>>>>
-    // 先拿到所有商品数据
-    List<ProductInfo> products = new ProductInfoService().getAll();
-    // 关键字筛选
+    // 如果有关键字就筛选, 否则拿到全部(分页是在模糊查询之后才做的)
+    PageHelper.startPage(currentPage,InitParams.PAGESIZE);
     if (isNotEmpty(likeword)) {
-        products = StreamUtil.FilterProductInfoLikeword(products.stream(), likeword);
-    }
-    // 一页20条数据, 共有多少页?
-    Integer shang = products.size() / InitParams.PAGESIZE;
-    Integer productSize = products.size();
-    Integer pageCount = 0;
-    if(productSize<=20){
-        pageCount = 1;
-    }else if (productSize%InitParams.PAGESIZE==0){
-        pageCount = shang;
+        pageInfo = new PageInfo<ProductInfo>(productInfoService.getByLikeword(likeword));
+        products = pageInfo.getList();
     }else{
-        pageCount = shang+1;
+        pageInfo = new PageInfo(productInfoService.getAll());
+        products = pageInfo.getList();
     }
-    // 只看当前页
+    int pageCount = pageInfo.getPages();
+
+
     // 存入内存
     request.setAttribute("products", products);
 %>
@@ -169,7 +169,7 @@
         <!--更多-->
         <div class="more-pages">
             <a class="direction-page" href="#"><</a>
-            第<%=p%>页&nbsp;&nbsp;/&nbsp;&nbsp; 共<%=pageCount%>页
+            第<%=currentPage%>页&nbsp;&nbsp;/&nbsp;&nbsp;共<%=pageCount%>页
             <a class="direction-page" href="#">></a>
         </div>
 

@@ -5,31 +5,59 @@
 
 <configuration>
     <properties resource=""></properties>
+
+
+
     <settings>
-<!--        <setting name="logImpl" value="LOG4J"/>-->
-<!--        <setting name="cacheEnabled" value="true"/>-->
+        <!--        <setting name="logImpl" value="LOG4J"/>-->
+        <!--        <setting name="cacheEnabled" value="true"/>-->
         <!--是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN 到经典Java 属性名 aColumn 的类似映射。 -->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
+
+
+
     <typeAliases>
         <package name="com.todd.huihuimall.domain"/>
     </typeAliases>
+
+
+    <!--
+    plugins在配置文件中的位置必须符合要求，否则会报错，顺序如下:
+    properties?, settings?,
+    typeAliases?, typeHandlers?,
+    objectFactory?,objectWrapperFactory?,
+    plugins?,
+    environments?, databaseIdProvider?, mappers?
+     -->
+    <plugins>
+        <!-- com.github.pagehelper为PageHelper类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 使用下面的方式配置参数，后面会有所有的参数介绍 -->
+<!--            <property name="helperDialect" value="mysql"/>-->
+        </plugin>
+    </plugins>
+
+
     <environments default="dev">
         <environment id="dev">
             <transactionManager type="JDBC"></transactionManager>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/huihuimall?serverTimezone=Asia/Shanghai&amp;characterEncoding=utf-8"/>
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/huihuimall?serverTimezone=Asia/Shanghai&amp;characterEncoding=utf-8"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
             </dataSource>
         </environment>
     </environments>
+
+
+
     <mappers>
         <mapper resource="mappers/UserInfoMapper.xml"></mapper>
         <mapper resource="mappers/ProductInfoMapper.xml"></mapper>
         <mapper resource="mappers/ShopInfoMapper.xml"></mapper>
-
         <!--        <mapper class="com.thq.backend.dao.UserMapper"></mapper>-->
         <!--        <mapper class="com.thq.backend.dao.TeacherMapper"></mapper>-->
     </mappers>
