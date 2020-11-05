@@ -23,13 +23,16 @@ public class GlobalFilter implements Filter {
             ".png",
             ".jpeg",
             ".mp4",
+            ".css.map",
             "/verificationCode",
             "/index.jsp",
             InitParams.LOGINPAGE,
             "/login",
             InitParams.REGISTERPAGE,
             "/register",
-            "/logout"
+            "/logout",
+
+            "/test"
     };
 
     @Override
@@ -46,6 +49,7 @@ public class GlobalFilter implements Filter {
         res.setHeader("Cache-Control", "no-cache"); //HTTP 1.1
         res.setHeader("Pragma", "no-cache"); //HTTP 1.0
         res.setDateHeader("Expires", 0); //prevents caching at the proxy server
+        res.setHeader("Access-Control-Allow-Origin","*"); // 允许跨域
 
         // 如果是/的方式访问首页, 就跳到index.jsp
         if (req.getRequestURI().endsWith(req.getContextPath() + "/")) {
@@ -75,7 +79,7 @@ public class GlobalFilter implements Filter {
             System.out.println("当前登录用户:" + currentUserInfo);
             if (null == currentUserInfo || currentUserInfo.getId().equals("")) {
                 System.err.println("拦截请求:"+req.getRequestURI());
-                Forwarder.showErrorPageAndToNewPage(req, res, "请先登录<br/>2秒后自动跳转至登录页面", req.getContextPath()+InitParams.LOGINPAGE);
+                Forwarder.showErrorPageAndToNewPage(req, res, "请先登录", req.getContextPath()+InitParams.LOGINPAGE);
                 return;
             } else {
                 System.out.println("放行请求:"+req.getRequestURI());

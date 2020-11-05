@@ -14,8 +14,12 @@
 <%@ page import="com.github.pagehelper.PageHelper" %>
 <%@ page import="com.github.pagehelper.PageInfo" %>
 <%
-    // 搜索关键字
+    // 准备搜索关键字
     String likeword = request.getParameter("likeword");
+    if (null != likeword) {
+        likeword = likeword.trim();
+        likeword = likeword == "null" ? "" : likeword;
+    }
     // 准备分页相关的参数
     String p = request.getParameter("p");
     Integer currentPage = isEmpty(p) ? 1 : Integer.valueOf(p);
@@ -26,11 +30,11 @@
     List<ProductInfo> products = null;
 
     // 如果有关键字就筛选, 否则拿到全部(分页是在模糊查询之后才做的)
-    PageHelper.startPage(currentPage,InitParams.PAGESIZE);
+    PageHelper.startPage(currentPage, InitParams.PAGESIZE);
     if (isNotEmpty(likeword)) {
         pageInfo = new PageInfo<ProductInfo>(productInfoService.getByLikeword(likeword));
         products = pageInfo.getList();
-    }else{
+    } else {
         pageInfo = new PageInfo(productInfoService.getAll());
         products = pageInfo.getList();
     }
@@ -53,6 +57,28 @@
     <link type="text/css" rel="stylesheet" href="css/header.css"/>
     <link type="text/css" rel="stylesheet" href="css/main.css"/>
     <link type="text/css" rel="stylesheet" href="css/footer.css"/>
+    <style>
+        .fourth{
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 50px;
+            height: 50px;
+            background: dodgerblue;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            user-select: none;
+            box-shadow: 0 19px 28px 0 rgba(0,0,0,.18);
+            cursor: pointer;
+        }
+        .fourth:hover{
+            transform: scale(1.2);
+            transition: all 0.2s;
+        }
+    </style>
 </head>
 <body>
 <!--网页头部-->
@@ -168,9 +194,23 @@
         </div>
         <!--更多-->
         <div class="more-pages">
-            <a class="direction-page" href="#"><</a>
+            <!--上一页专用表单-->
+            <form name="prev_page_form" action="index.jsp" method="get">
+                <input type="hidden" name="likeword" value="<%=likeword==null?"":likeword%>">
+                <input type="hidden" name="p" value="<%=currentPage-1%>">
+            </form>
+            <!--下一页专用表单-->
+            <form name="next_page_form" action="index.jsp" method="get">
+                <input type="hidden" name="likeword" value="<%=likeword==null?"":likeword%>">
+                <input type="hidden" name="p" value="<%=currentPage+1%>">
+            </form>
+            <c:if test="<%=currentPage>1%>">
+                <a class="direction-page" href="javascript:document.forms.namedItem('prev_page_form').submit()"><</a>
+            </c:if>
             第<%=currentPage%>页&nbsp;&nbsp;/&nbsp;&nbsp;共<%=pageCount%>页
-            <a class="direction-page" href="#">></a>
+            <c:if test="<%=currentPage<pageCount%>">
+                <a class="direction-page" href="javascript:document.forms.namedItem('next_page_form').submit()">></a>
+            </c:if>
         </div>
 
 
@@ -245,6 +285,12 @@
         </div>
         <p class="copy">&copy; 2019 网易公司 京ICP证080268号 京ICP备12032105号-1 京公网安备11010802020093号</p>
     </div>
+</div>
+
+
+<!--第四页入口-->
+<div class="fourth">
+    <span onclick="location.href='fourth.jsp'" class="t">Fourth</span>
 </div>
 <script type="text/javascript" src="js/index.js"></script>
 </body>

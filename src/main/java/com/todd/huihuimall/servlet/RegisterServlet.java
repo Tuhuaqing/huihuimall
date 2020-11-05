@@ -32,17 +32,17 @@ public class RegisterServlet extends HttpServlet {
         // 是否缺少参数
         if ("".equals(userName) || "".equals(password) || "".equals(verificationCode)
         ) {
-            Forwarder.showErrorPageAndToNewPage(req, res, "缺少参数, 请2秒后重新注册", req.getContextPath() + InitParams.REGISTERPAGE);
+            Forwarder.showErrorPageAndToNewPage(req, res, "缺少参数", req.getContextPath() + InitParams.REGISTERPAGE);
             return;
         }
         // 看用户名是否已经存在
         if (!(null == userInfoService.getOneByUserName(userName))) {
-            Forwarder.showErrorPageAndToNewPage(req, res, "该用户已存在, 请2秒后重新注册", req.getContextPath() + InitParams.REGISTERPAGE);
+            Forwarder.showErrorPageAndToNewPage(req, res, "该用户已存在", req.getContextPath() + InitParams.REGISTERPAGE);
             return;
         }
         // 看验证码是否正确
         if (!ss.getAttribute("correctVerificationCode").toString().toUpperCase().equals(verificationCode)) {
-            Forwarder.showErrorPageAndToNewPage(req, res, "验证码错误, 请2秒后重新注册", req.getContextPath() + InitParams.REGISTERPAGE);
+            Forwarder.showErrorPageAndToNewPage(req, res, "验证码错误", req.getContextPath() + InitParams.REGISTERPAGE);
             return;
         }
         // 开始注册
@@ -53,7 +53,7 @@ public class RegisterServlet extends HttpServlet {
                 .setTypeId("usertypeid002")
                 .setStatus(null);
         if (userInfoService.addOne(registingUserInfo)) {
-            Forwarder.showErrorPageAndToNewPage(req, res, "注册成功, 正在跳转至首页", req.getContextPath() + "/index.jsp");
+            Forwarder.showErrorPageAndToNewPage(req, res, "注册成功", req.getContextPath() + "/index.jsp");
             ss.setAttribute("currentUserInfo", registingUserInfo);
         }
     }
