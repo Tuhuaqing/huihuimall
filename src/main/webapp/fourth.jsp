@@ -29,7 +29,7 @@
         }
 
         /*返回首页*/
-        .back{
+        .back {
             position: fixed;
             left: 20px;
             top: 20px;
@@ -43,10 +43,11 @@
             line-height: 50px;
             border-radius: 50%;
             user-select: none;
-            box-shadow: 0 19px 28px 0 rgba(0,0,0,.18);
+            box-shadow: 0 19px 28px 0 rgba(0, 0, 0, .18);
             cursor: pointer;
         }
-        .back:hover{
+
+        .back:hover {
             transform: scale(1.2);
             transition: all 0.2s;
         }
@@ -295,11 +296,11 @@
 </head>
 
 <body>
-<div class="back">
+<div class="back" onclick="location.href='index.jsp'">
     <span class="t">&lt;</span>
 </div>
 <header class="header">
-    <h1>欢迎进入 <span class="fire">第四页</span></h1>
+    <h1><span class="fire">第四页</span></h1>
 </header>
 <div class="search-wrapper">
     <div class="input-holder">
@@ -333,7 +334,7 @@
         let keyword = (el_keyword.val() || "").trim()
         if (!!keyword) {
             let loading = layer.load()
-            axios.get("http://localhost:8080/huihuimall/test", {
+            axios.get("http://localhost:8000/crawl", {
                 params: {
                     keyword: keyword
                 }

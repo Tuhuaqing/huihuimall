@@ -6,6 +6,7 @@ import com.todd.huihuimall.util.HttpRequestUtil;
 import com.todd.huihuimall.domain.UserInfo;
 import com.todd.huihuimall.service.UserInfoService;
 import com.todd.huihuimall.util.FactoryUtil;
+import com.todd.huihuimall.util.StreamUtil;
 import org.junit.Test;
 import java.util.UUID;
 
@@ -77,4 +78,11 @@ public class TestClass {
     public void test10(){
         productInfoService.getAll().forEach(System.out::println);
     }
+    @Test
+    public void test11(){
+        StreamUtil.toPageList(productInfoService.getAll(),2,20,100).forEach(System.out::println);
+
+    }
+
+
 }

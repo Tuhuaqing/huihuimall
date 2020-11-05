@@ -12,4 +12,9 @@ public class StreamUtil {
     public static List<ProductInfo> FilterProductInfoLikeword(Stream<ProductInfo> stream, String likeword) {
         return stream.filter(item -> item.getProductName().contains(likeword)).collect(Collectors.toList());
     }
+
+    // 分页方法
+    public static List<ProductInfo> toPageList(List<ProductInfo> productInfos,Integer currentPage,Integer pageSize,Integer count){
+        return productInfos.stream().skip((currentPage-1)*pageSize).limit(pageSize).collect(Collectors.toList());
+    }
 }

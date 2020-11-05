@@ -175,10 +175,10 @@
                         <a href="${product.detailUrl}">
                             <img src="${product.imgUrl}" alt="" width="195" height="195"
                                  class="goods-img"/>
-                            <p class="to-store">直达商品</p>
+                            <p class="to-store">前往购买</p>
                             <div class="goods-info">
                                 <p class="goods-price clearfloat">
-                                    <span><c:out value="${product.productPrice}"/></span>
+                                    <span>¥<c:out value="${product.productPrice}"/></span>
                                     <img src="img/icon_steady.png"/>
                                 </p>
                                 <p class="goods-des">
@@ -186,6 +186,7 @@
                                 </p>
                                 <span class="goods-coupon"><c:out value="${product.productType.typeName}"/></span>
                                 <span class="goods-num">库存 ${product.productCount}</span>
+                                <span class="goods-num">${product.productStatus}</span>
                             </div>
                         </a>
                     </li>
