@@ -21,8 +21,8 @@
     <!--                ofType="User"-->
     <!--                select="getUnderUsers"/>-->
     <!--    </resultMap>-->
-    <!--  遍历map通用where (and版)  -->
 
+    <!--  遍历map通用where (and版)  -->
     <sql id="where_foreach_map_kvs">
         <where>
             <foreach index="key" item="value" collection="kvs" separator="and">
